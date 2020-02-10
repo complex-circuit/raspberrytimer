@@ -1,0 +1,41 @@
+from os import system as g
+import RPi.GPIO as GPIO
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(18, GPIO.IN,pull_up_down=GPIO.PUD_UP)
+def aftertap():
+     while GPIO.input(18):
+             zero=0
+ 
+
+
+import time
+def solve_start():
+	a=0
+	aftertap()
+	while a!=528789:
+		a+=1
+		if GPIO.input(18):
+			break
+	if a==528789:
+		solve_start()
+
+def solve():
+	thissolvetime=0
+	solve_start()
+	while not GPIO.input(18):
+		zero=0
+	while GPIO.input(18):
+		thissolvetime+=.01
+		time.sleep(.01)
+	print("\x1b[ASolved in "+str(thissolvetime)+"seconds. Click the  buttons when time written down.")
+	time.sleep(1)
+	aftertap()
+	time.sleep(1)
+
+if True:
+	g("clear")
+	while True:
+		print("\x1b[AIs the cube scrambled? Ready when you are.                                                      ")
+		solve()
+
+
